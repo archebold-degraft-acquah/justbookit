@@ -11,7 +11,7 @@ from django.core.exceptions import PermissionDenied
 
 def home(request):
     services = Service.objects.all()
-    return render(request, 'booking/home.html', {'services': services})
+    return render(request, 'booking/home.html', {'services': services, 'title': 'Home'})
 
 def signup(request):
     if request.method == 'POST':
@@ -22,7 +22,7 @@ def signup(request):
             return redirect('booking:dashboard')
     else:
         form = SignUpForm()
-    return render(request, 'booking/signup.html', {'form': form})
+    return render(request, 'booking/signup.html', {'form': form, 'title': 'Registration'})
 
 @login_required
 def dashboard(request):
@@ -32,20 +32,19 @@ def dashboard(request):
     else:
         services = None
         bookings = Booking.objects.filter(customer=request.user)
-    return render(request, 'booking/dashboard.html', {'services': services, 'bookings': bookings})
+    return render(request, 'booking/dashboard.html', {'services': services, 'bookings': bookings, 'title': 'Dashboard'})
 
 @login_required
 def service_detail(request, service_id):
     service = Service.objects.get(pk=service_id)
     reviews = Review.objects.filter(booking__service=service)
-    return render(request, 'booking/service_detail.html', {'service': service, 'reviews': reviews})
-
+    return render(request, 'booking/service_detail.html', {'service': service, 'reviews': reviews, 'title': service.name})
 
 
 def search_services(request):
     query = request.GET.get('q')
     services = Service.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
-    return render(request, 'booking/search_results.html', {'services': services, 'query': query})
+    return render(request, 'booking/search_results.html', {'services': services, 'query': query, 'title': 'Search results'})
 
 
 def send_booking_confirmation_email(booking):
@@ -71,7 +70,7 @@ def user_profile(request):
             return redirect('booking:dashboard')
     else:
         form = UserProfileForm(instance=request.user)
-    return render(request, 'booking/user_profile.html', {'form': form})
+    return render(request, 'booking/user_profile.html', {'form': form, 'title': 'Update Profile'})
 
 @login_required
 def review_service(request, booking_id):
@@ -95,7 +94,7 @@ def review_service(request, booking_id):
             return redirect('booking:dashboard')
     else:
         form = ReviewForm()
-    return render(request, 'booking/review_service.html', {'form': form, 'booking': booking})
+    return render(request, 'booking/review_service.html', {'form': form, 'booking': booking, 'title': f"Review {service.name}"})
 
 
 @login_required
@@ -107,7 +106,7 @@ def book_service(request, service_id):
         if form.is_valid():
             booking = form.save(commit=False)
             booking.service = service
-            booking.customer = request.user  # Set the customer here
+            booking.customer = request.user
 
             # Validate that the customer is not the service provider
             if booking.customer == booking.service.provider:
@@ -119,7 +118,7 @@ def book_service(request, service_id):
     else:
         form = BookingForm()
     
-    return render(request, 'booking/book_service.html', {'form': form, 'service': service})
+    return render(request, 'booking/book_service.html', {'form': form, 'service': service, 'title': f"Book {service.name}?"})
 
 
 @login_required
