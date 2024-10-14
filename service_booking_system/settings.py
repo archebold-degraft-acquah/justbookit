@@ -43,7 +43,7 @@ ALLOWED_HOSTS = ["justbookit.up.railway.app", "localhost"]
 # ALLOWED_HOSTS = ['.railway.com','127.0.0.1']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-05f8.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://justbookit.up.railway.app']
 
 # During development/for this tutorial you can instead set just the base URL
 # CSRF_TRUSTED_ORIGINS = ['https://*.railway.app']
