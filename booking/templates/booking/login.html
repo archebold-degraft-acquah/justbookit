@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Login to Your Account</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="{% url 'booking:signup' %}">Sign up here</a>.</p>
+            <p><a href="{% url 'booking:password_reset' %}">Forgot your password?</a></p>
+        </div>
+    </div>
+</body>
+</html>
