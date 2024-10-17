@@ -24,3 +24,9 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Booking)
 admin.site.register(Service)
 admin.site.register(Review)
+
+
+admin.site_header = 'Justbookit Administration'
+
+admin.site_title = 'Justbookit site admin'
+
