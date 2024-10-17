@@ -26,7 +26,7 @@ admin.site.register(Service)
 admin.site.register(Review)
 
 
-admin.site_header = 'Justbookit Administration'
+admin.site.site_header = 'Justbookit admin pannel'
 
-admin.site_title = 'Justbookit site admin'
+admin.site.site_title = 'Justbookit site admin'
 
